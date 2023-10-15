@@ -71,8 +71,8 @@ devDependencies:
     specifier: ^6.4.0
     version: 6.4.0
   fhevm:
-    specifier: ^0.1.13
-    version: 0.1.13
+    specifier: ^0.2.0
+    version: 0.2.0
   fhevmjs:
     specifier: ^0.1.3
     version: 0.1.3
@@ -3115,8 +3115,8 @@ packages:
       reusify: 1.0.4
     dev: true
 
-  /fhevm@0.1.13:
-    resolution: {integrity: sha512-LI+OkwEAysbPP1lSiZY1/JrV3ayk0w24K8PU+fZ1s97A31M1TG4h4N6uH5/+pX2KeJ1x8HAVAvxhxLQWnNE9Zg==}
+  /fhevm@0.2.0:
+    resolution: {integrity: sha512-liVrZ/AsFUlmt0Zjz3S6MoF88GldyMhVM3NPacZo/04s/1sDBLnaQKqoMbEwEEWRMaeYebLBF4/p5RMMN2U8jA==}
     dependencies:
       '@openzeppelin/contracts': 4.9.2
     dev: true
