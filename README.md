@@ -238,6 +238,30 @@ pnpm task:deployERC20
 
 ## Tips
 
+### Increase gas limit
+
+If you are running several fhe operations and need to have more has per block, here is a way to customize your local node setup.
+
+1. Copy docker setup.sh file
+
+```bash
+docker cp fhevm:/config/setup.sh .
+```
+
+2. Increase the gas limit from 10M to 100M for example in setup.sh
+
+```bash
+cat $HOME_EVMOSD/config/genesis.json | jq '.consensus_params["block"]["max_gas"]="10000000"' > $HOME_EVMOSD/config/tmp_genesis.json && mv $HOME_EVMOSD/config/tmp_genesis.json $HOME_EVMOSD/config/genesis.json
+```
+
+3. Run the dev image with the custom setup.sh file
+
+```bash
+docker run -i -v $PWD/setup.sh:/config/setup.sh -p 8545:8545 --rm --name fhevm ghcr.io/zama-ai/evmos-dev-node:v0.1.10
+```
+
+Note: one can also replace fhevm:start in package.json with the above command
+
 ### Syntax Highlighting
 
 If you use VSCode, you can get Solidity syntax highlighting with the
