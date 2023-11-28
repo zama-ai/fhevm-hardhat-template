@@ -240,7 +240,8 @@ pnpm task:deployERC20
 
 ### Increase gas limit
 
-If you are running several fhe operations and need to have more has per block, here is a way to customize your local node setup.
+If you are running several fhe operations and need to have more has per block, here is a way to customize your local
+node setup.
 
 1. Copy docker setup.sh file
 
