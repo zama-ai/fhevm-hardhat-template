@@ -1,19 +1,38 @@
-import { Signer } from "ethers";
-import fhevmjs, { FhevmInstance } from "fhevmjs";
+import { Signer } from 'ethers';
+import fhevmjs, { FhevmInstance } from 'fhevmjs';
+import { ethers as hethers } from 'hardhat';
 
-// import { ethers as hethers } from "hardhat";
-import type { Signers } from "./signers";
-import { FhevmInstances } from "./types";
+import { FHE_LIB_ADDRESS } from './generated';
+import type { Signers } from './signers';
+import { FhevmInstances } from './types';
+
+const network = process.env.HARDHAT_NETWORK;
 
 let publicKey: string;
 let chainId: number;
 
 export const createInstances = async (
   contractAddress: string,
-  ethers: any,
+  ethers: typeof hethers,
   accounts: Signers,
 ): Promise<FhevmInstances> => {
-  if (!publicKey || !chainId) {
+  // Create instance
+  const instances: FhevmInstances = {} as FhevmInstances;
+  await Promise.all(
+    Object.keys(accounts).map(async (k) => {
+      instances[k as keyof FhevmInstances] = await createInstance(
+        contractAddress,
+        accounts[k as keyof Signers],
+        ethers,
+      );
+    }),
+  );
+
+  return instances;
+};
+
+export const createInstance = async (contractAddress: string, account: Signer, ethers: typeof hethers) => {
+  if (network !== 'hardhat' && (!publicKey || !chainId)) {
     // 1. Get chain id
     const provider = ethers.provider;
 
@@ -21,22 +40,28 @@ export const createInstances = async (
     chainId = +network.chainId.toString(); // Need to be a number
 
     // Get blockchain public key
-    publicKey = await provider.call({
-      to: "0x0000000000000000000000000000000000000044",
+    const ret = await provider.call({
+      to: FHE_LIB_ADDRESS,
+      // first four bytes of keccak256('fhePubKey(bytes1)') + 1 byte for library
+      data: '0xd9d47bb001',
     });
+    const decoded = ethers.AbiCoder.defaultAbiCoder().decode(['bytes'], ret);
+    publicKey = decoded[0];
+  }
+  let instance = await fhevmjs.createInstance({ chainId: 31337, publicKey: '0x00' }); // 31337 is hardhat node's default chainId
+  await generateToken(contractAddress, account, instance);
+
+  if (network === 'hardhat') {
+    instance.encrypt8 = createUintToUint8ArrayFunction(8);
+    instance.encrypt16 = createUintToUint8ArrayFunction(16);
+    instance.encrypt32 = createUintToUint8ArrayFunction(32);
+    instance.decrypt = (_, hexadecimalString) => Number(BigInt(hexadecimalString));
+  } else {
+    instance = await fhevmjs.createInstance({ chainId, publicKey });
+    await generateToken(contractAddress, account, instance);
   }
 
-  // Create instance
-  const instances: FhevmInstances = {} as FhevmInstances;
-  await Promise.all(
-    Object.keys(accounts).map(async (k) => {
-      const instance = await fhevmjs.createInstance({ chainId, publicKey });
-      await generateToken(contractAddress, accounts[k as keyof Signers], instance);
-      instances[k as keyof FhevmInstances] = instance;
-    }),
-  );
-
-  return instances;
+  return instance;
 };
 
 const generateToken = async (contractAddress: string, signer: Signer, instance: FhevmInstance) => {
@@ -44,12 +69,28 @@ const generateToken = async (contractAddress: string, signer: Signer, instance: 
   const generatedToken = instance.generateToken({
     verifyingContract: contractAddress,
   });
-
   // Sign the public key
   const signature = await signer.signTypedData(
     generatedToken.token.domain,
-    { Reencrypt: generatedToken.token.types.Reencrypt }, // Need to remove EIP712Domain from types
+    { Reencrypt: generatedToken.token.types.Reencrypt },
     generatedToken.token.message,
   );
   instance.setTokenSignature(contractAddress, signature);
 };
+
+function createUintToUint8ArrayFunction(numBits: number) {
+  const numBytes = Math.ceil(numBits / 8);
+  const maxValue = 2 ** numBits;
+  const totalBytes = 32;
+
+  return function (uint: number) {
+    let value = uint % maxValue;
+    let buffer = new ArrayBuffer(totalBytes);
+    let view = new DataView(buffer);
+    for (let i = 0; i < numBytes; i++) {
+      let byteValue = (value >> (8 * (numBytes - i - 1))) & 0xff;
+      view.setUint8(totalBytes - numBytes + i, byteValue);
+    }
+    return new Uint8Array(buffer);
+  };
+}
