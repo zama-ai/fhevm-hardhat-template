@@ -1,10 +1,10 @@
-import { Signer } from 'ethers';
-import fhevmjs, { FhevmInstance } from 'fhevmjs';
-import { ethers as hethers } from 'hardhat';
+import { Signer } from "ethers";
+import fhevmjs, { FhevmInstance } from "fhevmjs";
+import { ethers as hethers } from "hardhat";
 
-import { FHE_LIB_ADDRESS } from './generated';
-import type { Signers } from './signers';
-import { FhevmInstances } from './types';
+import { FHE_LIB_ADDRESS } from "./generated";
+import type { Signers } from "./signers";
+import { FhevmInstances } from "./types";
 
 const network = process.env.HARDHAT_NETWORK;
 
@@ -49,7 +49,7 @@ export const createInstance = async (contractAddress: string, account: Signer, e
     publicKey = decoded[0];
   }
   let instance = await fhevmjs.createInstance({ chainId: 31337, publicKey: '0x00' }); // 31337 is hardhat node's default chainId
-  await generateToken(contractAddress, account, instance);
+  await generatePublicKey(contractAddress, account, instance);
 
   if (network === 'hardhat') {
     instance.encrypt8 = createUintToUint8ArrayFunction(8);
@@ -58,24 +58,24 @@ export const createInstance = async (contractAddress: string, account: Signer, e
     instance.decrypt = (_, hexadecimalString) => Number(BigInt(hexadecimalString));
   } else {
     instance = await fhevmjs.createInstance({ chainId, publicKey });
-    await generateToken(contractAddress, account, instance);
+    await generatePublicKey(contractAddress, account, instance);
   }
 
   return instance;
 };
 
-const generateToken = async (contractAddress: string, signer: Signer, instance: FhevmInstance) => {
+const generatePublicKey = async (contractAddress: string, signer: Signer, instance: FhevmInstance) => {
   // Generate token to decrypt
-  const generatedToken = instance.generateToken({
+  const generatedToken = instance.generatePublicKey({
     verifyingContract: contractAddress,
   });
   // Sign the public key
   const signature = await signer.signTypedData(
-    generatedToken.token.domain,
-    { Reencrypt: generatedToken.token.types.Reencrypt },
-    generatedToken.token.message,
+    generatedToken.eip712.domain,
+    { Reencrypt: generatedToken.eip712.types.Reencrypt }, // Need to remove EIP712Domain from types
+    generatedToken.eip712.message,
   );
-  instance.setTokenSignature(contractAddress, signature);
+  instance.setSignature(contractAddress, signature);
 };
 
 function createUintToUint8ArrayFunction(numBits: number) {
@@ -84,11 +84,11 @@ function createUintToUint8ArrayFunction(numBits: number) {
   const totalBytes = 32;
 
   return function (uint: number) {
-    let value = uint % maxValue;
-    let buffer = new ArrayBuffer(totalBytes);
-    let view = new DataView(buffer);
+    const value = uint % maxValue;
+    const buffer = new ArrayBuffer(totalBytes);
+    const view = new DataView(buffer);
     for (let i = 0; i < numBytes; i++) {
-      let byteValue = (value >> (8 * (numBytes - i - 1))) & 0xff;
+      const byteValue = (value >> (8 * (numBytes - i - 1))) & 0xff;
       view.setUint8(totalBytes - numBytes + i, byteValue);
     }
     return new Uint8Array(buffer);

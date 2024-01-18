@@ -1,25 +1,20 @@
-import { exec as oldExec } from 'child_process';
-import { NonceManager } from 'ethers';
-import { ethers } from 'hardhat';
-import { promisify } from 'util';
-
+import { NonceManager } from "ethers";
+import { ethers } from "hardhat";
 
 // Module augmentation to add 'address' to NonceManager
-declare module 'ethers' {
+declare module "ethers" {
   interface NonceManager {
     address: string;
   }
 }
 
 // Extend the NonceManager prototype
-Object.defineProperty(ethers.NonceManager.prototype, 'address', {
+Object.defineProperty(ethers.NonceManager.prototype, "address", {
   get: function () {
     return this.signer.address;
   },
   enumerable: true,
 });
-
-const exec = promisify(oldExec);
 
 export interface Signers {
   alice: NonceManager;
@@ -31,9 +26,7 @@ export interface Signers {
 
 let signers: Signers;
 
-const keys: (keyof Signers)[] = ['alice', 'bob', 'carol', 'dave', 'eve'];
-
-export const initSigners = async (quantity: number): Promise<void> => {
+export const initSigners = async (): Promise<void> => {
   if (!signers) {
     const eSigners = await ethers.getSigners();
     signers = {

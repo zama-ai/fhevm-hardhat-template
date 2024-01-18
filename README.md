@@ -175,7 +175,7 @@ One can change the network, check [hardhat config file](./hardhat.config.ts).
 Run the `mint` task on the local network:
 
 ```sh
-pnpm task:mint --network local --mint 1000 --account alice
+pnpm task:mint --network local --mint 1000
 ```
 
 ### Test

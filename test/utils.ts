@@ -1,10 +1,10 @@
-import { ContractMethodArgs, Typed } from 'ethers';
-import { ethers } from 'hardhat';
-import { TypedContractMethod } from '../types/common';
+import { ContractMethodArgs, Typed } from "ethers";
+import { ethers } from "hardhat";
 
+import { TypedContractMethod } from "../types/common";
 
 export const waitForBlock = (blockNumber: bigint) => {
-  if (process.env.HARDHAT_NETWORK === 'hardhat') {
+  if (process.env.HARDHAT_NETWORK === "hardhat") {
     return new Promise((resolve, reject) => {
       const intervalId = setInterval(async () => {
         try {
@@ -23,11 +23,11 @@ export const waitForBlock = (blockNumber: bigint) => {
     return new Promise((resolve, reject) => {
       const waitBlock = async (currentBlock: number) => {
         if (blockNumber <= BigInt(currentBlock)) {
-          await ethers.provider.off('block', waitBlock);
+          await ethers.provider.off("block", waitBlock);
           resolve(blockNumber);
         }
       };
-      ethers.provider.on('block', waitBlock).catch((err) => {
+      ethers.provider.on("block", waitBlock).catch((err) => {
         reject(err);
       });
     });

@@ -97,7 +97,7 @@ contract ConfidentialERC20 is Reencrypt, Ownable2Step {
         bytes32 publicKey,
         bytes calldata signature
     ) public view virtual onlySignedPublicKey(publicKey, signature) returns (bytes memory) {
-        require(owner == msg.sender || spender == msg.sender);
+        require(owner == msg.sender || spender == msg.sender, "Caller must be owner or spender");
         return TFHE.reencrypt(_allowance(owner, spender), publicKey);
     }
 
