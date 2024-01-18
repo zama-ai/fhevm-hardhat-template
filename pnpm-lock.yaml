@@ -70,6 +70,9 @@ devDependencies:
   ethers:
     specifier: ^6.8.0
     version: 6.10.0
+  fhevm:
+    specifier: ^0.3.0
+    version: 0.3.0(hardhat@2.19.4)
   fhevmjs:
     specifier: ^0.3.1
     version: 0.3.1
@@ -1156,7 +1159,6 @@ packages:
 
   /@openzeppelin/contracts@5.0.1:
     resolution: {integrity: sha512-yQJaT5HDp9hYOOp4jTYxMsR02gdFZFXhewX5HW9Jo4fsqSVqqyIO/xTHdWDaKX5a3pv1txmf076Lziz+sO7L1w==}
-    dev: false
 
   /@scure/base@1.1.5:
     resolution: {integrity: sha512-Brj9FiG2W1MRQSTB212YVPRrcbjkv48FoZi/u4l/zds/ieRrqsh7aUf6CLwkAq61oKXr/ZlTzlY66gLIj3TFTQ==}
@@ -2788,6 +2790,15 @@ packages:
     resolution: {integrity: sha512-ifCoaXsDrsdkWTtiNJX5uzHDsrck5TzfKKDcuFFTIrrc/BS076qgEIfoIy1VeZqViznfKiysPYTh/QeHtnIsYA==}
     dependencies:
       reusify: 1.0.4
+    dev: true
+
+  /fhevm@0.3.0(hardhat@2.19.4):
+    resolution: {integrity: sha512-+xLuWQ0B0GeO/cPsmEvfW9yUEMIPlYoZ8v26sCjtWHyWzr4WBNHhxbMYxvZiW/hLTJTKCc91hBxGpdQjH4zBWw==}
+    dependencies:
+      '@openzeppelin/contracts': 5.0.1
+      hardhat-preprocessor: 0.1.5(hardhat@2.19.4)
+    transitivePeerDependencies:
+      - hardhat
     dev: true
 
   /fhevmjs@0.3.1:

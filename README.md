@@ -80,9 +80,9 @@ Then, proceed with installing dependencies:
 pnpm install
 ```
 
-### Start fhevm
+### Start fhEVM
 
-Start a local fhevm docker container that inlcudes everything needed to deploy FHE encrypted smart contracts
+Start a local fhEVM docker container that inlcudes everything needed to deploy FHE encrypted smart contracts
 
 ```sh
 # In one terminal, keep it opened
@@ -236,32 +236,34 @@ Deploy a new instance of the EncryptedERC20 contract via a task:
 pnpm task:deployERC20
 ```
 
-## Tips
+### Mocked mode
 
-### Increase gas limit
+The mocked mode allows faster testing and the ability to analyze coverage of the tests. In this mocked version,
+encrypted types are not really encrypted, and the tests are run on the original version of the EVM, on a local hardhat
+network instance. To run the tests in mocked mode, you can use directly the following command:
 
-If you are running several fhe operations and need to have more has per block, here is a way to customize your local
-node setup.
-
-1. Copy docker setup.sh file
-
-```bash
-docker cp fhevm:/config/setup.sh .
+```sh
+pnpm test:mock
 ```
 
-2. Increase the gas limit from 10M to 100M for example in setup.sh
+To analyze the coverage of the tests (in mocked mode necessarily, as this cannot be done on the real fhEVM node), you
+can use this command :
 
-```bash
-cat $HOME_EVMOSD/config/genesis.json | jq '.consensus_params["block"]["max_gas"]="10000000"' > $HOME_EVMOSD/config/tmp_genesis.json && mv $HOME_EVMOSD/config/tmp_genesis.json $HOME_EVMOSD/config/genesis.json
+```sh
+pnpm coverage:mock
 ```
 
-3. Run the dev image with the custom setup.sh file
+Then open the file `coverage/index.html`. You can see there which line or branch for each contract which has been
+covered or missed by your test suite. This allows increased security by pointing out missing branches not covered yet by
+the current tests.
 
-```bash
-docker run -i -v $PWD/setup.sh:/config/setup.sh -p 8545:8545 --rm --name fhevm ghcr.io/zama-ai/evmos-dev-node:v0.1.10
-```
-
-Note: one can also replace fhevm:start in package.json with the above command
+Notice that, due to intrinsic limitations of the original EVM, the mocked version differ in few corner cases from the
+real fhEVM, the most important change is the `TFHE.isInitialized` method which will always return `true` in the mocked
+version. Another big difference in mocked mode, compared to the real fhEVM implementation, is that there is no
+ciphertext verification neither checking that a ciphertext has been honestly obtained (see section 4 of the
+[whitepaper](https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf)). This means that before deploying to
+production, developers still need to run the tests with the original fhEVM node, as a final check in non-mocked mode,
+with `pnpm test`.
 
 ### Syntax Highlighting
 
@@ -277,7 +279,7 @@ on/off.
 
 ## Local development with Docker
 
-Please check Evmos repository to be able to build FhEVM from sources.
+Please check the [fhevm-go](https://github.com/zama-ai/fhevm-go) repository to be able to build fhEVM from sources.
 
 ## License
 

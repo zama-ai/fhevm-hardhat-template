@@ -32,7 +32,7 @@ export const createInstances = async (
 };
 
 export const createInstance = async (contractAddress: string, account: Signer, ethers: typeof hethers) => {
-  if (network !== 'hardhat' && (!publicKey || !chainId)) {
+  if (network !== "hardhat" && (!publicKey || !chainId)) {
     // 1. Get chain id
     const provider = ethers.provider;
 
@@ -43,15 +43,15 @@ export const createInstance = async (contractAddress: string, account: Signer, e
     const ret = await provider.call({
       to: FHE_LIB_ADDRESS,
       // first four bytes of keccak256('fhePubKey(bytes1)') + 1 byte for library
-      data: '0xd9d47bb001',
+      data: "0xd9d47bb001",
     });
-    const decoded = ethers.AbiCoder.defaultAbiCoder().decode(['bytes'], ret);
+    const decoded = ethers.AbiCoder.defaultAbiCoder().decode(["bytes"], ret);
     publicKey = decoded[0];
   }
-  let instance = await fhevmjs.createInstance({ chainId: 31337, publicKey: '0x00' }); // 31337 is hardhat node's default chainId
+  let instance = await fhevmjs.createInstance({ chainId: 31337, publicKey: "0x00" }); // 31337 is hardhat node's default chainId
   await generatePublicKey(contractAddress, account, instance);
 
-  if (network === 'hardhat') {
+  if (network === "hardhat") {
     instance.encrypt8 = createUintToUint8ArrayFunction(8);
     instance.encrypt16 = createUintToUint8ArrayFunction(16);
     instance.encrypt32 = createUintToUint8ArrayFunction(32);
