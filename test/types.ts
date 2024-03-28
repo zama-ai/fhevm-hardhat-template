@@ -8,7 +8,6 @@ declare module "mocha" {
     signers: Signers;
     contractAddress: string;
     instances: FhevmInstances;
-    erc20: EncryptedERC20;
   }
 }
 

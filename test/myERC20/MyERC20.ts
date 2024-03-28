@@ -3,16 +3,16 @@ import { ethers, network } from "hardhat";
 
 import { createInstances } from "../instance";
 import { getSigners, initSigners } from "../signers";
-import { deployEncryptedERC20Fixture } from "./EncryptedERC20.fixture";
+import { deployMyERC20Fixture } from "./MyERC20.fixture";
 
-describe("EncryptedERC20", function () {
+describe("MyERC20", function () {
   before(async function () {
     await initSigners();
     this.signers = await getSigners();
   });
 
   beforeEach(async function () {
-    const contract = await deployEncryptedERC20Fixture();
+    const contract = await deployMyERC20Fixture();
     this.contractAddress = await contract.getAddress();
     this.erc20 = contract;
     this.instances = await createInstances(this.contractAddress, ethers, this.signers);
@@ -25,41 +25,18 @@ describe("EncryptedERC20", function () {
     expect(symbol, "NARA");
   });
 
-  it("should mint the contract", async function () {
-    const transaction = await this.erc20.mint(1000);
-    await transaction.wait();
-    // Call the method
-    const token = this.instances.alice.getPublicKey(this.contractAddress) || {
-      signature: "",
-      publicKey: "",
-    };
+  it("should get own balance and total supply", async function () {
+    const token = this.instances.alice.getPublicKey(this.contractAddress)!;
     const encryptedBalance = await this.erc20.balanceOf(this.signers.alice, token.publicKey, token.signature);
     // Decrypt the balance
     const balance = this.instances.alice.decrypt(this.contractAddress, encryptedBalance);
-    expect(balance).to.equal(1000);
+    expect(balance).to.equal(1000000);
 
     const totalSupply = await this.erc20.totalSupply();
-    // Decrypt the total supply
-    expect(totalSupply).to.equal(1000);
-  });
-
-  it("non-owner should be unable to mint", async function () {
-    if (network.name == "hardhat") {
-      // mocked mode
-      await expect(this.erc20.connect(this.signers.bob).mint(1000))
-        .to.be.revertedWithCustomError(this.erc20, "OwnableUnauthorizedAccount")
-        .withArgs(this.signers.bob.address);
-    } else {
-      // fhevm-mode
-      const tx = await this.erc20.connect(this.signers.bob).mint(1000, { gasLimit: 1_000_000n });
-      await expect(tx.wait()).to.throw;
-    }
+    expect(totalSupply).to.equal(1000000);
   });
 
   it("should transfer tokens between two users", async function () {
-    const transaction = await this.erc20.mint(10000);
-    await transaction.wait();
-
     const encryptedTransferAmount = this.instances.alice.encrypt64(1337);
     const tx = await this.erc20["transfer(address,bytes)"](this.signers.bob.address, encryptedTransferAmount);
     await tx.wait();
@@ -75,7 +52,7 @@ describe("EncryptedERC20", function () {
     // Decrypt the balance
     const balanceAlice = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice);
 
-    expect(balanceAlice).to.equal(10000 - 1337);
+    expect(balanceAlice).to.equal(1000000 - 1337);
 
     const bobErc20 = this.erc20.connect(this.signers.bob);
 
@@ -89,18 +66,8 @@ describe("EncryptedERC20", function () {
     expect(balanceBob).to.equal(1337);
   });
 
-  it("should only be able to read hiw own balance", async function () {
-    const transaction = await this.erc20.mint(10000);
-    await transaction.wait();
+  it("should only be able to read own balance", async function () {
     const tokenAlice = this.instances.alice.getPublicKey(this.contractAddress)!;
-    const encryptedBalanceAlice = await this.erc20.balanceOf(
-      this.signers.alice,
-      tokenAlice.publicKey,
-      tokenAlice.signature,
-    );
-    // Decrypt own balance
-    const balanceAlice = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice);
-    expect(balanceAlice).to.equal(10000);
 
     // Alice cannot decrypt Bob's balance
     await expect(this.erc20.balanceOf(this.signers.bob, tokenAlice.publicKey, tokenAlice.signature)).to.be.revertedWith(
@@ -115,25 +82,19 @@ describe("EncryptedERC20", function () {
   });
 
   it("balanceOfMe should recover own's balance handle", async function () {
-    expect(await this.erc20.balanceOfMe()).to.be.eq(0n); // Alice's initial handle is 0
-    const transaction = await this.erc20.mint(1000);
-    await transaction.wait();
     if (network.name == "hardhat") {
       // mocked mode
-      expect(await this.erc20.balanceOfMe()).to.be.eq(1000n);
+      expect(await this.erc20.balanceOfMe()).to.be.eq(1000000n);
     } else {
       // fhevm node mode (real handle)
       expect(await this.erc20.balanceOfMe()).to.be.eq(
-        42886855740009186301312685209120323787138419884243836762205742602803093210845n,
+        71480303746443559211476173181663275878345533655723421767618276236756512920548n,
       );
     }
   });
 
-  it("should not transfer tokens between two users", async function () {
-    const transaction = await this.erc20.mint(1000);
-    await transaction.wait();
-
-    const encryptedTransferAmount = this.instances.alice.encrypt64(1337);
+  it("should not transfer tokens between two users if balance is unsufficient", async function () {
+    const encryptedTransferAmount = this.instances.alice.encrypt64(1337000);
     const tx = await this.erc20["transfer(address,bytes)"](this.signers.bob.address, encryptedTransferAmount);
     await tx.wait();
 
@@ -148,7 +109,7 @@ describe("EncryptedERC20", function () {
     // Decrypt the balance
     const balanceAlice = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice);
 
-    expect(balanceAlice).to.equal(1000);
+    expect(balanceAlice).to.equal(1000000);
 
     const bobErc20 = this.erc20.connect(this.signers.bob);
 
@@ -163,9 +124,6 @@ describe("EncryptedERC20", function () {
   });
 
   it("should be able to transferFrom only if allowance is sufficient", async function () {
-    const transaction = await this.erc20.mint(10000);
-    await transaction.wait();
-
     const encryptedAllowanceAmount = this.instances.alice.encrypt64(1337);
     const tx = await this.erc20["approve(address,bytes)"](this.signers.bob.address, encryptedAllowanceAmount);
     await tx.wait();
@@ -188,7 +146,7 @@ describe("EncryptedERC20", function () {
 
     // Decrypt the balance
     const balanceAlice = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice);
-    expect(balanceAlice).to.equal(10000); // check that transfer did not happen, as expected
+    expect(balanceAlice).to.equal(1000000); // check that transfer did not happen, as expected
 
     const tokenBob = this.instances.bob.getPublicKey(this.contractAddress)!;
     const encryptedBalanceBob = await bobErc20.balanceOf(this.signers.bob, tokenBob.publicKey, tokenBob.signature);
@@ -211,7 +169,7 @@ describe("EncryptedERC20", function () {
     );
     // Decrypt the balance
     const balanceAlice2 = this.instances.alice.decrypt(this.contractAddress, encryptedBalanceAlice2);
-    expect(balanceAlice2).to.equal(10000 - 1337); // check that transfer did happen this time
+    expect(balanceAlice2).to.equal(1000000 - 1337); // check that transfer did happen this time
 
     const encryptedBalanceBob2 = await bobErc20.balanceOf(this.signers.bob, tokenBob.publicKey, tokenBob.signature);
     const balanceBob2 = this.instances.bob.decrypt(this.contractAddress, encryptedBalanceBob2);
@@ -219,9 +177,6 @@ describe("EncryptedERC20", function () {
   });
 
   it("only spender and owner could read their allowance", async function () {
-    const transaction = await this.erc20.mint(10000);
-    await transaction.wait();
-
     const encryptedAllowanceAmount = this.instances.alice.encrypt64(1337);
     const tx = await this.erc20["approve(address,bytes)"](this.signers.bob.address, encryptedAllowanceAmount);
     await tx.wait();
@@ -283,9 +238,6 @@ describe("EncryptedERC20", function () {
   });
 
   it("should handle errors correctly", async function () {
-    // case 1 succesful transfer
-    const transaction = await this.erc20.mint(10000);
-    await transaction.wait();
     let encryptedTransferAmount = this.instances.alice.encrypt64(1337);
     const tx = await this.erc20["transfer(address,bytes)"](this.signers.bob.address, encryptedTransferAmount);
     await tx.wait();
@@ -296,7 +248,7 @@ describe("EncryptedERC20", function () {
     expect(errorCode).to.equal(0);
 
     // case 2 failed transfer
-    encryptedTransferAmount = this.instances.alice.encrypt64(100000n);
+    encryptedTransferAmount = this.instances.alice.encrypt64(100000000n);
     const tx2 = await this.erc20["transfer(address,bytes)"](this.signers.bob.address, encryptedTransferAmount);
     await tx2.wait();
     encryptedErrorCode = await this.erc20.reencryptError(1n, tokenAlice.publicKey, tokenAlice.signature);
@@ -305,7 +257,7 @@ describe("EncryptedERC20", function () {
     expect(errorCode).to.equal(1);
 
     // case 3 successful transferFrom
-    const encryptedAllowanceAmount = this.instances.alice.encrypt64(20000);
+    const encryptedAllowanceAmount = this.instances.alice.encrypt64(2000000);
     const tx3 = await this.erc20["approve(address,bytes)"](this.signers.bob.address, encryptedAllowanceAmount);
     await tx3.wait();
 
@@ -328,7 +280,7 @@ describe("EncryptedERC20", function () {
     );
 
     // case 4 failed transferFrom because of unsufficient balance
-    encryptedTransferAmount = this.instances.bob.encrypt64(15000);
+    encryptedTransferAmount = this.instances.bob.encrypt64(1500000);
     const tx5 = await bobErc20["transferFrom(address,address,bytes)"](
       this.signers.alice.address,
       this.signers.bob.address,

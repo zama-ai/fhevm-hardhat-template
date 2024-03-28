@@ -152,7 +152,7 @@ pnpm deploy:contracts
 Notes: <br />
 
 <details>
-<summary>Error: cannot get the transaction for EncryptedERC20's previous deployment</summary>
+<summary>Error: cannot get the transaction for MyERC20's previous deployment</summary>
 
 One can delete the local folder in deployments:
 
@@ -169,14 +169,6 @@ One can change the network, check [hardhat config file](./hardhat.config.ts).
 
 </details>
 <br />
-
-#### Mint
-
-Run the `mint` task on the local network:
-
-```sh
-pnpm task:mint --network local --mint 1000
-```
 
 ### Test
 
@@ -220,9 +212,9 @@ pnpm clean
 
 ### Tasks
 
-#### Deploy EncryptedERC20
+#### Deploy MyERC20
 
-Deploy a new instance of the EncryptedERC20 contract via a task:
+Deploy a new instance of the MyERC20 contract via a task:
 
 ```sh
 pnpm task:deployERC20
