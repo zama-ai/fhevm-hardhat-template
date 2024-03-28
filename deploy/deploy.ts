@@ -5,7 +5,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const deployed = await deploy("ConfidentialERC20", {
+  const deployed = await deploy("EncryptedERC20", {
     from: deployer,
     args: ["Naraggara", "NARA"],
     log: true,
