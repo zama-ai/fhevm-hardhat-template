@@ -90,11 +90,11 @@
     "fhevm:stop": "make clean",
     "fhevm:restart": "fhevm:stop && fhevm:start",
     "fhevm:faucet": "npm run fhevm:faucet:alice && sleep 5 && npm run fhevm:faucet:bob && sleep 5 && npm run fhevm:faucet:carol && sleep 5 && npm run fhevm:faucet:dave && sleep 5 && npm run fhevm:faucet:eve",
-    "fhevm:faucet:alice": "docker exec -i zama-dev-fhevm-validator-1 faucet $(npx hardhat task:getEthereumAddressAlice)",
-    "fhevm:faucet:bob": "docker exec -i zama-dev-fhevm-validator-1 faucet $(npx hardhat task:getEthereumAddressBob)",
-    "fhevm:faucet:carol": "docker exec -i zama-dev-fhevm-validator-1 faucet $(npx hardhat task:getEthereumAddressCarol)",
-    "fhevm:faucet:dave": "docker exec -i zama-dev-fhevm-validator-1 faucet $(npx hardhat task:getEthereumAddressDave)",
-    "fhevm:faucet:eve": "docker exec -i zama-dev-fhevm-validator-1 faucet $(npx hardhat task:getEthereumAddressEve)"
+    "fhevm:faucet:alice": "docker exec -i fhevm zama-kms-validator-1 $(npx hardhat task:getEthereumAddressAlice)",
+    "fhevm:faucet:bob": "docker exec -i fhevm zama-kms-validator-1 $(npx hardhat task:getEthereumAddressBob)",
+    "fhevm:faucet:carol": "docker exec -i fhevm zama-kms-validator-1 $(npx hardhat task:getEthereumAddressCarol)",
+    "fhevm:faucet:dave": "docker exec -i fhevm zama-kms-validator-1 $(npx hardhat task:getEthereumAddressDave)",
+    "fhevm:faucet:eve": "docker exec -i fhevm zama-kms-validator-1 $(npx hardhat task:getEthereumAddressEve)"
   },
   "dependencies": {
     "hardhat-ignore-warnings": "^0.2.11"
