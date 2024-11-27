@@ -1,3 +1,4 @@
+import "@nomicfoundation/hardhat-ignition";
 import "@nomicfoundation/hardhat-toolbox";
 import dotenv from "dotenv";
 import * as fs from "fs-extra";

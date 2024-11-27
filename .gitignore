@@ -14,6 +14,7 @@ kms-fhe-keys/
 network-fhe-keys/
 fhevmTemp/
 abi/
+ignition/deployments
 
 # files
 *.env
