@@ -71,9 +71,9 @@ describe("ConfidentialERC20:FHEGas", function () {
     if (network.name === "hardhat") {
       // `getFHEGasFromTxReceipt` function only works in mocked mode but gives same exact FHEGas consumed than on the real fhEVM
       const FHEGasConsumedTransferFrom = getFHEGasFromTxReceipt(t3);
-      console.log("FHEGas Consumed during transfer", FHEGasConsumedTransferFrom);
+      console.log("FHEGas Consumed during transferFrom", FHEGasConsumedTransferFrom);
     }
     // contrarily to FHEGas, native gas in mocked mode slightly differs from the real gas consumption on fhevm (underestimated by ~20%)
-    console.log("Native Gas Consumed during transfer", t3.gasUsed);
+    console.log("Native Gas Consumed during transferFrom", t3.gasUsed);
   });
 });

@@ -6,7 +6,6 @@ import "hardhat-ignore-warnings";
 import { HardhatUserConfig, extendProvider } from "hardhat/config";
 import { task } from "hardhat/config";
 import type { NetworkUserConfig } from "hardhat/types";
-import { resolve } from "path";
 
 import CustomProvider from "./CustomProvider";
 // Adjust the import path as needed
@@ -20,17 +19,7 @@ extendProvider(async (provider) => {
   return newProvider;
 });
 
-task("compile:specific", "Compiles only the specified contract")
-  .addParam("contract", "The contract's path")
-  .setAction(async ({ contract }, hre) => {
-    // Adjust the configuration to include only the specified contract
-    hre.config.paths.sources = contract;
-
-    await hre.run("compile");
-  });
-
-const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
-dotenv.config({ path: resolve(__dirname, dotenvConfigPath) });
+dotenv.config();
 
 // Ensure that we have all the environment variables we need.
 const mnemonic: string = process.env.MNEMONIC!;

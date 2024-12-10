@@ -81,17 +81,17 @@ devDependencies:
     specifier: ^1.1.18
     version: 1.2.0
   fhevm:
-    specifier: ^0.6.0
-    version: 0.6.0
+    specifier: ^0.6.1-0
+    version: 0.6.1-0
   fhevm-contracts:
     specifier: ^0.2.0
     version: 0.2.0
   fhevm-core-contracts:
-    specifier: ^0.6.0
-    version: 0.6.0
+    specifier: ^0.6.1-0
+    version: 0.6.1-0
   fhevmjs:
-    specifier: ^0.6.0
-    version: 0.6.0
+    specifier: ^0.6.1
+    version: 0.6.1
   fs-extra:
     specifier: ^10.1.0
     version: 10.1.0
@@ -3192,12 +3192,12 @@ packages:
       - supports-color
     dev: true
 
-  /fhevm-core-contracts@0.6.0:
-    resolution: {integrity: sha512-j62NNTITZOqHTl0sw4EjBV9YJTPDMnBzzYMoLVtoeHUMibZj6jgkBofEltjVmpKRjQr0O5q6xf+Xw9fDOlFQSg==}
+  /fhevm-core-contracts@0.6.1-0:
+    resolution: {integrity: sha512-4UrR/SMdR/uNla7zkzd812ppcIovnJfDYIAY1FxM2E5ZSe2+4xXhVlQlcwyQ+ak2lDUhP29MixIORTJN+zZ4vA==}
     dev: true
 
-  /fhevm@0.6.0:
-    resolution: {integrity: sha512-6tcVRLzlhg0s1gThACYCVP94Ir/k61Zaj4IsVyEBFP7WJEHdeOF61OYUZIIKlMofKdToVBadNus+XO8ys47Ysw==}
+  /fhevm@0.6.1-0:
+    resolution: {integrity: sha512-ItN5k9vpx5nnY2yZbaODpyKZWYt35RCShpnM+LuEiJuD1k/diGjZfuAm5rQ9eJVKG/d+R2bBxsdcfoQlUzowtQ==}
     engines: {node: '>=20.0.0'}
     dependencies:
       '@openzeppelin/contracts': 5.1.0
@@ -3208,8 +3208,8 @@ packages:
       - supports-color
     dev: true
 
-  /fhevmjs@0.6.0:
-    resolution: {integrity: sha512-xukyiXv+KertTTEIhFuZp2jW31RBOXUC6TfVZBAUVEr1xiTnvXtePwuutvqj3rabnclRBTzr/j4UmEPvCaGXQw==}
+  /fhevmjs@0.6.1:
+    resolution: {integrity: sha512-y8G92We5oHHIunA7TykvUR5Sv1jYEQmBfEHJZb6q3GZRPoaHPbmN5QB+R+6NmVk/dch9osbjUnMlGZe7tV4bQA==}
     engines: {node: '>=20'}
     hasBin: true
     dependencies:
@@ -3218,9 +3218,9 @@ packages:
       fetch-mock: 11.1.5
       keccak: 3.0.4
       node-tfhe: 0.9.1
-      node-tkms: 0.9.0-rc36
+      node-tkms: 0.9.0
       tfhe: 0.9.1
-      tkms: 0.9.0-rc36
+      tkms: 0.9.0
       wasm-feature-detect: 1.8.0
     transitivePeerDependencies:
       - node-fetch
@@ -4667,8 +4667,8 @@ packages:
     resolution: {integrity: sha512-M2CbUVX4DQneaaK/4fygy9lW0zjOOzM8yGWAgbKGRt/Gd07zaloFEGGHW7dbmUaHo022q1uo7nzxyYhe4UgqCw==}
     dev: true
 
-  /node-tkms@0.9.0-rc36:
-    resolution: {integrity: sha512-oGqJfjvb/igd9VgQaqYbzKc+CmrnQ/eY0ShmdE3JDKXL3C4Re/tBswT0KkWmlT1aM+Lxt5ihRNOs2oHtrPqr5w==}
+  /node-tkms@0.9.0:
+    resolution: {integrity: sha512-ulhV23okeMW3WYnxzhvf9u87tcXqe64JqUFlvdgu64uKteG8re+zwOjzkOdxvF0xSWQbMtEU96dvcrvQM10PEg==}
     dev: true
 
   /nofilter@3.1.0:
@@ -5895,8 +5895,8 @@ packages:
       picomatch: 4.0.2
     dev: true
 
-  /tkms@0.9.0-rc36:
-    resolution: {integrity: sha512-8IoRi6mYgnrmwTNBe/ejvHOFRhs5M6o2Ls2RVXCgAzSVBBBWJC1O8hquqlciHfME/VooUD4iokzEaBfADvoXZw==}
+  /tkms@0.9.0:
+    resolution: {integrity: sha512-dSzorTHvIXTYZtn6ACV/iz0GhO/kMRjqGbo3o7JJ3GNbFhsPzbIEtAQ/x+h9nJdwn//VRdsStnOAE0fxUVIGrQ==}
     dev: true
 
   /tmp@0.0.33:
