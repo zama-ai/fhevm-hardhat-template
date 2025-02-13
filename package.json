@@ -90,8 +90,7 @@
     "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
     "test": "hardhat test --network hardhat",
     "coverage": "hardhat coverage",
-    "deploy-sepolia": "hardhat deploy --network sepolia",
-    "mint-sepolia": "hardhat mint --amount 42 --network sepolia"
+    "deploy-sepolia": "hardhat deploy --network sepolia"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2"

@@ -204,6 +204,23 @@ npx hardhat verify-deployed --address [CONFIDENTIAL_ERC20_ADDRESS] --contract co
 
 Note that you should replace the address placeholder `[CONFIDENTIAL_ERC20_ADDRESS]` by the concrete address that is logged when you run the `pnpm deploy-sepolia` deployment script.
 
+### Interacting with the Contract
+
+Once you have deployed your contract to Sepolia (using `pnpm deploy-sepolia`), you can interact with it using the following commands:
+
+```sh
+# Mint new tokens (encrypted amount)
+npx hardhat mint --amount <amount> --network sepolia
+
+# Transfer tokens to another address (encrypted amount)
+npx hardhat transfer --to <recipient-address> --amount <amount> --network sepolia
+
+# Check encrypted balance of an address
+npx hardhat balance --address <address> --network sepolia
+```
+
+> **Note**: All token amounts in transactions are automatically encrypted to maintain confidentiality on the blockchain.
+
 ### Syntax Highlighting
 
 If you use VSCode, you can get Solidity syntax highlighting with the
