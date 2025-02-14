@@ -76,8 +76,8 @@ importers:
         specifier: ^6.8.0
         version: 6.13.5
       fhevm:
-        specifier: 0.5.2
-        version: 0.5.2
+        specifier: 0.5.9
+        version: 0.5.9
       fhevmjs:
         specifier: 0.5.2
         version: 0.5.2
@@ -1410,8 +1410,8 @@ packages:
       picomatch:
         optional: true
 
-  fhevm@0.5.2:
-    resolution: {integrity: sha512-KF4Qw+1Ud59hc6z8UO9HElvBr0HCabJb4/cJF4yVpyYA0F/tB3XH9kF5Yacq2/pVfxgi6XvBRLXeuui3wezwJg==}
+  fhevm@0.5.9:
+    resolution: {integrity: sha512-9cSfmAa4AJUuROd4kESvtNYJpnea1PUvjU7yaNnrJsaHqPkVGQvpnIDEnO4KTsJ36Etup1ksPs8PvyGNYwkatQ==}
     engines: {node: '>=20.0.0'}
 
   fhevmjs@0.5.2:
@@ -2452,12 +2452,6 @@ packages:
 
   solidity-comments-linux-x64-gnu@0.0.2:
     resolution: {integrity: sha512-zIqLehBK/g7tvrFmQljrfZXfkEeLt2v6wbe+uFu6kH/qAHZa7ybt8Vc0wYcmjo2U0PeBm15d79ee3AkwbIjFdQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  solidity-comments-linux-x64-gnu@0.1.1:
-    resolution: {integrity: sha512-oiU4yhh1Q9SeGXQ+/sogfTNoOkU8I8IvlIeotBQziTOonUHrxQk4E63kNiYGPDn5ZbB3BhKFmGHNRNrkufsxcQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -4540,10 +4534,9 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
-  fhevm@0.5.2:
+  fhevm@0.5.9:
     dependencies:
       '@openzeppelin/contracts': 5.2.0
-      solidity-comments-linux-x64-gnu: 0.1.1
 
   fhevmjs@0.5.2:
     dependencies:
@@ -5683,8 +5676,6 @@ snapshots:
 
   solidity-comments-linux-x64-gnu@0.0.2:
     optional: true
-
-  solidity-comments-linux-x64-gnu@0.1.1: {}
 
   solidity-comments-linux-x64-musl@0.0.2:
     optional: true
