@@ -42,34 +42,31 @@ task("mint")
   });
 
 task("balance")
-  .addParam("address", "Address to check balance for")
+  .addParam("privatekey", "Private key of the address to check balance for")
   .setAction(async function (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) {
     try {
       const { ethers, deployments } = hre;
 
-      // Validate address
-      if (!ethers.isAddress(taskArguments.address)) {
-        throw new Error("Invalid address format");
-      }
+      // Create wallet from private key and get address
+      const wallet = new ethers.Wallet(taskArguments.privatekey);
+      const address = wallet.address;
 
-      console.info("Checking balance for address:", taskArguments.address);
+      console.info("Checking balance for address:", address);
 
       // Get contract
       const ERC20 = await deployments.get("MyConfidentialERC20");
       const erc20 = (await ethers.getContractAt("MyConfidentialERC20", ERC20.address)) as MyConfidentialERC20;
 
-      // Get signer and create FHEVM instance
-      const signers = await ethers.getSigners();
       const fhevm = await createInstance(hre);
 
       // Get balance handle
-      const balanceHandle = await erc20.balanceOf(taskArguments.address);
+      const balanceHandle = await erc20.balanceOf(address);
       console.info("✅ Retrieved balance handle successfully");
 
-      // Reencrypt and display balance
-      const balance = await reencryptEuint64(signers[0], fhevm, balanceHandle, ERC20.address);
+      // Reencrypt and display balance using the wallet derived from private key
+      const balance = await reencryptEuint64(wallet, fhevm, balanceHandle, ERC20.address);
       console.info("----------------------------------------");
-      console.info(`Address: ${taskArguments.address}`);
+      console.info(`Address: ${address}`);
       console.info(`Balance: ${balance.toString()} tokens`);
       console.info("----------------------------------------");
     } catch (error) {
