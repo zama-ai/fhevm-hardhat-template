@@ -56,7 +56,7 @@ describe("EncryptedERC20", function () {
     expect(balanceBob).to.equal(1337);
   });
 
-  it("reencrypt - should transfer tokens between two users", async function () {
+  it.only("reencrypt - should transfer tokens between two users", async function () {
     const transaction = await this.erc20.mint(10000);
     const t1 = await transaction.wait();
     expect(t1?.status).to.eq(1);

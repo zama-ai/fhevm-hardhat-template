@@ -5,7 +5,7 @@
 # 2. All test addresses are funded (e.g. via the fund_test_addresses.sh script).
 npx hardhat clean
 mkdir fhevmTemp
-cp -r node_modules/fhevm fhevmTemp/
+cp -L -r node_modules/fhevm fhevmTemp/
 npx hardhat compile:specific --contract fhevmTemp/fhevm/lib
 npx hardhat compile:specific --contract fhevmTemp/fhevm/gateway
 rm -rf fhevmTemp
