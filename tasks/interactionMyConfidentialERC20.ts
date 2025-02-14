@@ -63,8 +63,15 @@ task("balance")
       const balanceHandle = await erc20.balanceOf(address);
       console.info("✅ Retrieved balance handle successfully");
 
-      // Reencrypt and display balance using the wallet derived from private key
-      const balance = await reencryptEuint64(wallet, fhevm, balanceHandle, ERC20.address);
+      let balance;
+      // Check if the handle is 0
+      if (balanceHandle === 0n) {
+        balance = 0n;
+      } else {
+        // Reencrypt and display balance using the wallet derived from private key
+        balance = await reencryptEuint64(wallet, fhevm, balanceHandle, ERC20.address);
+      }
+
       console.info("----------------------------------------");
       console.info(`Address: ${address}`);
       console.info(`Balance: ${balance.toString()} tokens`);
