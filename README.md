@@ -215,7 +215,7 @@ npx hardhat mint --amount <amount> --network sepolia
 # Transfer tokens to another address (encrypted amount)
 npx hardhat transfer --to <recipient-address> --amount <amount> --network sepolia
 
-# Check encrypted balance of an address
+# Check encrypted balance of an account
 npx hardhat balance --privatekey <private-key> --network sepolia
 ```
 
