@@ -183,10 +183,7 @@ Another faster way to test the coprocessor on Sepolia is to simply run the follo
 ```
 pnpm deploy-sepolia
 ```
-This would automatically deploy an instance of the `MyConfidentialERC20` example contract on Sepolia. You could then use this other command to mint some amount of confidential tokens: 
-```
-pnpm mint-sepolia
-```
+This would automatically deploy an instance of the `MyConfidentialERC20` example contract on Sepolia.
 
 ### Etherscan verification
 
@@ -210,10 +207,13 @@ Once you have deployed your contract to Sepolia (using `pnpm deploy-sepolia`), y
 
 ```sh
 # Mint new tokens (encrypted amount)
-npx hardhat mint --amount <amount> --network sepolia
+npx hardhat mint --to <recipient-address> --amount <amount> --network sepolia
+
+# Check the total supply
+npx hardhat totalSupply --network sepolia
 
 # Transfer tokens to another address (encrypted amount)
-npx hardhat transfer --to <recipient-address> --amount <amount> --network sepolia
+npx hardhat transfer --privatekey <private-key> --to <recipient-address> --amount <amount> --network sepolia
 
 # Check encrypted balance of an account
 npx hardhat balance --privatekey <private-key> --network sepolia
