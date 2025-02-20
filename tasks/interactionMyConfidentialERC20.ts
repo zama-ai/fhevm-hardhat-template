@@ -8,6 +8,7 @@ import { createInstance } from "./instance";
 
 task("mint")
   .addParam("amount", "Tokens to mint")
+  .addParam("to", "Recipient address")
   .setAction(async function (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) {
     try {
       const { ethers, deployments } = hre;
@@ -18,22 +19,27 @@ task("mint")
         throw new Error("Amount must be a positive number");
       }
 
+      // Validate inputs
+      if (!ethers.isAddress(taskArguments.to)) {
+        throw new Error("Invalid recipient address format");
+      }
+
       // Get contract and signer
       const ERC20 = await deployments.get("MyConfidentialERC20");
-      const signers = await ethers.getSigners();
-      const erc20 = (await ethers.getContractAt("MyConfidentialERC20", ERC20.address)) as MyConfidentialERC20;
+      const signer = await ethers.provider.getSigner();
+      const erc20 = (await ethers.getContractAt("MyConfidentialERC20", ERC20.address, signer)) as MyConfidentialERC20;
 
       console.info("Starting mint process...");
       console.info(`Contract address: ${ERC20.address}`);
-      console.info(`Minting ${amount} tokens to address: ${signers[0].address}`);
+      console.info(`Minting ${amount} tokens to address: ${taskArguments.to}`);
 
-      const tx = await erc20.connect(signers[0]).mint(signers[0], amount);
+      const tx = await erc20.mint(taskArguments.to, amount);
       console.info("Transaction submitted, waiting for confirmation...");
 
       const rcpt = await tx.wait();
       console.info("✅ Mint transaction successful!");
       console.info("Transaction hash:", rcpt!.hash);
-      console.info(`${amount} tokens were minted to ${signers[0].address}`);
+      console.info(`${amount} tokens were minted to ${taskArguments.to}`);
     } catch (error) {
       console.error("❌ Mint failed:");
       console.error(error instanceof Error ? error.message : error);
