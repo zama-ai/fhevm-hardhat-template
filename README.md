@@ -212,8 +212,11 @@ Once you have deployed your contract to Sepolia (using `pnpm deploy-sepolia`), y
 # Mint new tokens (encrypted amount)
 npx hardhat mint --amount <amount> --network sepolia
 
+# Check the total supply
+npx hardhat totalSupply --network sepolia
+
 # Transfer tokens to another address (encrypted amount)
-npx hardhat transfer --to <recipient-address> --amount <amount> --network sepolia
+npx hardhat transfer --privatekey <private-key> --to <recipient-address> --amount <amount> --network sepolia
 
 # Check encrypted balance of an account
 npx hardhat balance --privatekey <private-key> --network sepolia
