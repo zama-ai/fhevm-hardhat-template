@@ -3,7 +3,7 @@ import { ethers } from "hardhat";
 
 import { ACCOUNT_NAMES } from "./constants";
 
-type AccountNames = (typeof ACCOUNT_NAMES)[number];
+export type AccountNames = (typeof ACCOUNT_NAMES)[number];
 
 export interface Signers {
   [K in AccountNames]: HardhatEthersSigner;

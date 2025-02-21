@@ -151,9 +151,10 @@ task("transfer")
       const encryptedAmount = await input.encrypt();
 
       console.info("Submitting transfer transaction...");
-      const tx = await erc20
-        .connect(wallet)
-        ["transfer(address,bytes32,bytes)"](taskArguments.to, encryptedAmount.handles[0], encryptedAmount.inputProof);
+      const tx = await erc20.connect(wallet)[
+        // eslint-disable-next-line no-unexpected-multiline
+        "transfer(address,bytes32,bytes)"
+      ](taskArguments.to, encryptedAmount.handles[0], encryptedAmount.inputProof);
 
       console.info("Waiting for confirmation...");
       const rcpt = await tx.wait();

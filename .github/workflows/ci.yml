@@ -43,7 +43,7 @@ jobs:
         run: "pnpm typechain"
 
       - name: "Test the contracts and generate the coverage report"
-        run: "pnpm coverage:mock"
+        run: "pnpm coverage"
 
       - name: "Add test summary"
         run: |

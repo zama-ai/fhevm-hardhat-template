@@ -14,7 +14,9 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2020"
+    "target": "es2020",
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": ["node_modules"],
   "files": ["./hardhat.config.ts"],
