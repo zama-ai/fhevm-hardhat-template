@@ -161,7 +161,7 @@ async function reencryptHandle(
   instance: FhevmInstance,
   handle: bigint,
   contractAddress: string,
-): Promise<any> {
+): Promise<bigint> {
   const { publicKey: publicKey, privateKey: privateKey } = instance.generateKeypair();
   const eip712 = instance.createEIP712(publicKey, contractAddress);
   const signature = await signer.signTypedData(eip712.domain, { Reencrypt: eip712.types.Reencrypt }, eip712.message);

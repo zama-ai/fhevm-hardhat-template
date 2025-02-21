@@ -118,11 +118,12 @@ const fulfillAllPastRequestsIds = async (mocked: boolean) => {
       if (mocked) {
         // in mocked mode, we trigger the decryption fulfillment manually
         await awaitCoprocessor();
-
-        // first check tat all handles are allowed for decryption
-        const aclArtifact = require("fhevm-core-contracts/artifacts/contracts/ACL.sol/ACL.json");
-        const acl = await ethers.getContractAt(aclArtifact.abi, ACL_ADDRESS);
-        const isAllowedForDec = await Promise.all(handles.map(async (handle) => acl.isAllowedForDecryption(handle)));
+        // first check that all handles are allowed for decryption
+        const { abi: aclAbi } = await import("fhevm-core-contracts/artifacts/contracts/ACL.sol/ACL.json");
+        const acl = await ethers.getContractAt(aclAbi, ACL_ADDRESS);
+        const isAllowedForDec = await Promise.all(
+          handles.map(async (handle: bigint) => acl.isAllowedForDecryption(handle)),
+        );
         if (!allTrue(isAllowedForDec)) {
           throw new Error("Some handle is not authorized for decryption");
         }
@@ -142,11 +143,9 @@ const fulfillAllPastRequestsIds = async (mocked: boolean) => {
         );
 
         const abiCoder = new ethers.AbiCoder();
-        let encodedData;
-        let calldata;
 
-        encodedData = abiCoder.encode(["uint256", ...types], [31, ...valuesFormatted4]); // 31 is just a dummy uint256 requestID to get correct abi encoding for the remaining arguments (i.e everything except the requestID)
-        calldata = "0x" + encodedData.slice(66); // we just pop the dummy requestID to get the correct value to pass for `decryptedCts`
+        const encodedData = abiCoder.encode(["uint256", ...types], [31, ...valuesFormatted4]); // 31 is just a dummy uint256 requestID to get correct abi encoding for the remaining arguments (i.e everything except the requestID)
+        const calldata = "0x" + encodedData.slice(66); // we just pop the dummy requestID to get the correct value to pass for `decryptedCts`
 
         const numSigners = 1; // for the moment mocked mode only uses 1 signer
         const decryptResultsEIP712signatures = await computeDecryptSignatures(handles, calldata, numSigners);

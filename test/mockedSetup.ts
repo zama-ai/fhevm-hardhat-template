@@ -14,22 +14,28 @@ import {
 const OneAddress = "0x0000000000000000000000000000000000000001";
 
 export async function setCodeMocked(hre: HardhatRuntimeEnvironment) {
-  const aclArtifact = require("fhevm-core-contracts/artifacts/contracts/ACL.sol/ACL.json");
+  const aclArtifact = await import("fhevm-core-contracts/artifacts/contracts/ACL.sol/ACL.json");
   const aclBytecode = aclArtifact.deployedBytecode;
   await hre.network.provider.send("hardhat_setCode", [ACL_ADDRESS, aclBytecode]);
-  const execArtifact = require("fhevm-core-contracts/artifacts/contracts/TFHEExecutorWithEvents.sol/TFHEExecutorWithEvents.json");
+  const execArtifact = await import(
+    "fhevm-core-contracts/artifacts/contracts/TFHEExecutorWithEvents.sol/TFHEExecutorWithEvents.json"
+  );
   const execBytecode = execArtifact.deployedBytecode;
   await hre.network.provider.send("hardhat_setCode", [TFHEEXECUTOR_ADDRESS, execBytecode]);
-  const kmsArtifact = require("fhevm-core-contracts/artifacts/contracts/KMSVerifier.sol/KMSVerifier.json");
+  const kmsArtifact = await import("fhevm-core-contracts/artifacts/contracts/KMSVerifier.sol/KMSVerifier.json");
   const kmsBytecode = kmsArtifact.deployedBytecode;
   await hre.network.provider.send("hardhat_setCode", [KMSVERIFIER_ADDRESS, kmsBytecode]);
-  const inputArtifact = require("fhevm-core-contracts/artifacts/contracts/InputVerifier.coprocessor.sol/InputVerifier.json");
+  const inputArtifact = await import(
+    "fhevm-core-contracts/artifacts/contracts/InputVerifier.coprocessor.sol/InputVerifier.json"
+  );
   const inputBytecode = inputArtifact.deployedBytecode;
   await hre.network.provider.send("hardhat_setCode", [INPUTVERIFIER_ADDRESS, inputBytecode]);
-  const fhepaymentArtifact = require("fhevm-core-contracts/artifacts/contracts/FHEPayment.sol/FHEPayment.json");
+  const fhepaymentArtifact = await import("fhevm-core-contracts/artifacts/contracts/FHEPayment.sol/FHEPayment.json");
   const fhepaymentBytecode = fhepaymentArtifact.deployedBytecode;
   await hre.network.provider.send("hardhat_setCode", [FHEPAYMENT_ADDRESS, fhepaymentBytecode]);
-  const gatewayArtifact = require("fhevm-core-contracts/artifacts/gateway/GatewayContract.sol/GatewayContract.json");
+  const gatewayArtifact = await import(
+    "fhevm-core-contracts/artifacts/gateway/GatewayContract.sol/GatewayContract.json"
+  );
   const gatewayBytecode = gatewayArtifact.deployedBytecode;
   await hre.network.provider.send("hardhat_setCode", [GATEWAYCONTRACT_ADDRESS, gatewayBytecode]);
   const zero = await impersonateAddress(hre, ZeroAddress, hre.ethers.parseEther("100"));

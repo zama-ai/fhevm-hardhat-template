@@ -21,7 +21,9 @@ extendProvider(async (provider) => {
 dotenv.config();
 
 // Ensure that we have all the environment variables we need.
-const mnemonic: string = process.env.MNEMONIC!;
+const mnemonic: string =
+  process.env.MNEMONIC ||
+  "exchange vintage ocean narrow danger return culture ignore trim solve clock hidden buddy wise emotion";
 
 const chainIds = {
   zama: 8009,
@@ -43,7 +45,10 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       jsonRpcUrl = "https://devnet.zama.ai";
       break;
     case "sepolia":
-      jsonRpcUrl = process.env.SEPOLIA_RPC_URL!;
+      jsonRpcUrl = process.env.SEPOLIA_RPC_URL || "https://sepolia.infura.io/v3/YOUR-PROJECT-ID";
+      break;
+    default:
+      jsonRpcUrl = "http://localhost:8545";
   }
   return {
     accounts: {
