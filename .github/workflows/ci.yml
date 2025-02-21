@@ -30,6 +30,10 @@ jobs:
 
       - name: "Install the dependencies"
         run: "pnpm install"
+        env:
+          MNEMONIC:
+            "exchange vintage ocean narrow danger return culture ignore trim solve clock hidden buddy wise emotion"
+          SEPOLIA_RPC_URL: "https://sepolia.infura.io/v3/YOUR-PROJECT-ID"
 
       - name: "Lint the code"
         run: "pnpm lint"
