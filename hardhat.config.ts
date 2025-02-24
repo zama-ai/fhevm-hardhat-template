@@ -21,9 +21,7 @@ extendProvider(async (provider) => {
 dotenv.config();
 
 // Ensure that we have all the environment variables we need.
-const mnemonic: string =
-  process.env.MNEMONIC ||
-  "exchange vintage ocean narrow danger return culture ignore trim solve clock hidden buddy wise emotion";
+const mnemonic: string = process.env.MNEMONIC!;
 
 const chainIds = {
   zama: 8009,
