@@ -29,9 +29,9 @@
     "@openzeppelin/contracts-upgradeable": "^5.1.0"
   },
   "devDependencies": {
-    "axios": "^1.10.0",
-    "@fhevm/hardhat-plugin": "^0.0.1-2",
-    "@zama-fhe/relayer-sdk": "^0.1.0-5",
+    "@fhevm/core-contracts": "0.7.0-11",
+    "@fhevm/hardhat-plugin": "0.0.1-2",
+    "@zama-fhe/relayer-sdk": "0.1.0-5",
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
     "@nomicfoundation/hardhat-ethers": "^3.0.9",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
@@ -95,6 +95,7 @@
     "elliptic@<=6.6.0": ">=6.6.1",
     "tar-fs@>=2.0.0 <2.1.2": ">=2.1.2",
     "axios@>=1.0.0 <1.8.2": ">=1.8.2",
+    "axios@<0.29.1": ">=0.29.1",
     "cookie@<0.7.0": ">=0.7.0"
   }
 }
