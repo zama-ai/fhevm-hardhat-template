@@ -24,7 +24,7 @@
     "hardhat"
   ],
   "dependencies": {
-    "@fhevm/solidity": "^0.7.0-4",
+    "@fhevm/solidity": "^0.7.0",
     "@openzeppelin/contracts": "^5.1.0",
     "@openzeppelin/contracts-upgradeable": "^5.1.0"
   },
