@@ -9,13 +9,13 @@ For detailed instructions see: [FHEVM Hardhat Quick Start Tutorial](https://docs
 ### Prerequisites
 
 - **Node.js**: Version 20 or higher
-- **pnpm or npm/yarn**: Package manager
+- **npm or yarn/pnpm**: Package manager
 
 ### Installation
 
 1. **Install dependencies**
    ```bash
-   pnpm install
+   npm install
    ```
 
 2. **Set up environment variables**
@@ -31,8 +31,8 @@ For detailed instructions see: [FHEVM Hardhat Quick Start Tutorial](https://docs
 
 3. **Compile and test**
    ```bash
-   pnpm compile
-   pnpm test
+   npm run compile
+   npm run test
    ```
 4. **Deploy to local network**
    ```bash
@@ -64,13 +64,13 @@ fhevm-hardhat-template/
 
 ## 📜 Available Scripts
 
-| Script           | Description                         |
-| ---------------- | ----------------------------------- |
-| `pnpm compile`   | Compile all contracts               |
-| `pnpm test`      | Run all tests                       |
-| `pnpm coverage`  | Generate coverage report            |
-| `pnpm lint`      | Run linting checks                  |
-| `pnpm clean`     | Clean build artifacts               |
+| Script             | Description              |
+| ------------------ | ------------------------ |
+| `npm run compile`  | Compile all contracts    |
+| `npm run test`     | Run all tests            |
+| `npm run coverage` | Generate coverage report |
+| `npm run lint`     | Run linting checks       |
+| `npm run clean`    | Clean build artifacts    |
 
 ## 📚 Documentation
 
