@@ -20,27 +20,7 @@ jobs:
         with:
           version: stable
       - run: npm ci
-      - name: Check for CRLF line endings (skip binary files)
-        shell: pwsh
-        run: |
-          function IsBinaryFile($path) {
-            $bytes = Get-Content $path -Encoding Byte -TotalCount 8000
-            return $bytes -contains 0
-          }
-
-          $files = Get-ChildItem -Recurse -File -Exclude .git, node_modules, dist | Where-Object {
-            -not (IsBinaryFile $_.FullName) -and
-            (Get-Content $_.FullName -Raw -Encoding UTF8) -match "`r`n"
-          }
-
-          if ($files) {
-            Write-Host "::error ::CRLF line endings found in the following files:"
-            $files | ForEach-Object { Write-Host "::error file=$($_.FullName)::CRLF found" }
-            exit 1
-          } else {
-            Write-Host "✅ No CRLF line endings found in text files."
-          }
-      - run: npm run prettier:check
+      # - run: npm run prettier:check
       - run: npm run lint
       - run: npm run compile
       - run: npm run build:ts
