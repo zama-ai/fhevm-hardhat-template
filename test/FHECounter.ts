@@ -28,11 +28,13 @@ describe("FHECounter", function () {
     signers = { deployer: ethSigners[0], alice: ethSigners[1], bob: ethSigners[2] };
   });
 
-  beforeEach(async () => {
+  beforeEach(async function () {
     // Check whether the tests are running against an FHEVM mock environment
     if (!fhevm.isMock) {
-      throw new Error(`This hardhat test suite cannot run on Sepolia Testnet`);
+      console.warn(`This hardhat test suite cannot run on Sepolia Testnet`);
+      this.skip();
     }
+
     ({ fheCounterContract, fheCounterContractAddress } = await deployFixture());
   });
 
