@@ -1,10 +1,12 @@
 # FHEVM Hardhat Template
 
-A Hardhat-based template for developing Fully Homomorphic Encryption (FHE) enabled Solidity smart contracts using the FHEVM protocol by Zama.
+A Hardhat-based template for developing Fully Homomorphic Encryption (FHE) enabled Solidity smart contracts using the
+FHEVM protocol by Zama.
 
 ## Quick Start
 
-For detailed instructions see: [FHEVM Hardhat Quick Start Tutorial](https://docs.zama.ai/protocol/solidity-guides/getting-started/quick-start-tutorial)
+For detailed instructions see:
+[FHEVM Hardhat Quick Start Tutorial](https://docs.zama.ai/protocol/solidity-guides/getting-started/quick-start-tutorial)
 
 ### Prerequisites
 
@@ -14,39 +16,53 @@ For detailed instructions see: [FHEVM Hardhat Quick Start Tutorial](https://docs
 ### Installation
 
 1. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Set up environment variables**
+
    ```bash
    npx hardhat vars set MNEMONIC
-   
+
    # Set your Infura API key for network access
    npx hardhat vars set INFURA_API_KEY
-   
+
    # Optional: Set Etherscan API key for contract verification
    npx hardhat vars set ETHERSCAN_API_KEY
    ```
 
 3. **Compile and test**
+
    ```bash
    npm run compile
    npm run test
    ```
+
 4. **Deploy to local network**
+
    ```bash
-   # (Optional) Start local Anvil instance
-   anvil
+   # Start a local FHEVM-ready node
+   npx hardhat node
    # Deploy to local network
-   npx hardhat deploy
+   npx hardhat deploy --network localhost
    ```
+
 5. **Deploy to Sepolia Testnet**
+
    ```bash
    # Deploy to Sepolia
    npx hardhat deploy --network sepolia
    # Verify contract on Etherscan
    npx hardhat verify --network sepolia <CONTRACT_ADDRESS>
+   ```
+
+6. **Test on Sepolia Testnet**
+
+   ```bash
+   # Once deployed, you can run a simple test on Sepolia.
+   npx hardhat test --network sepolia
    ```
 
 ## 📁 Project Structure
@@ -92,4 +108,3 @@ This project is licensed under the BSD-3-Clause-Clear License. See the [LICENSE]
 ---
 
 **Built with ❤️ by the Zama team**
-

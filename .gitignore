@@ -22,5 +22,4 @@ tmp
 .pnp.*
 coverage.json
 pnpm-lock.yaml
-package-lock.json
 yarn.lock
