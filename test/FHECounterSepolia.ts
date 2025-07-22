@@ -29,7 +29,7 @@ describe("FHECounterSepolia", function () {
       const FHECounterDeployement = await deployments.get("FHECounter");
       fheCounterContractAddress = FHECounterDeployement.address;
       fheCounterContract = await ethers.getContractAt("FHECounter", FHECounterDeployement.address);
-    } catch(e) {
+    } catch (e) {
       (e as Error).message += ". Call 'npx hardhat deploy --network sepolia'";
       throw e;
     }
@@ -54,7 +54,9 @@ describe("FHECounterSepolia", function () {
       .add32(0)
       .encrypt();
 
-    progress(`Call increment(0) FHECounter=${fheCounterContractAddress} handle=${ethers.hexlify(encryptedZero.handles[0])} signer=${signers.alice.address}...`);
+    progress(
+      `Call increment(0) FHECounter=${fheCounterContractAddress} handle=${ethers.hexlify(encryptedZero.handles[0])} signer=${signers.alice.address}...`,
+    );
     let tx = await fheCounterContract
       .connect(signers.alice)
       .increment(encryptedZero.handles[0], encryptedZero.inputProof);
