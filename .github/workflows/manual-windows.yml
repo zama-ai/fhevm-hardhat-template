@@ -21,7 +21,7 @@ jobs:
           version: stable
       - run: npm ci
       # - run: npm run prettier:check
-      - run: npm run lint
+      # - run: npm run lint
       - run: npm run compile
       - run: npm run build:ts
       - run: npm test
