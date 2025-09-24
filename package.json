@@ -82,8 +82,8 @@
     "chain": "hardhat node --network hardhat --no-deploy",
     "deploy:localhost": "hardhat deploy --network localhost",
     "deploy:sepolia": "hardhat deploy --network sepolia",
-    "verify": "hardhat verify",
-    "verify:sepolia": "hardhat verify --network sepolia"  },
+    "verify:sepolia": "hardhat verify --network sepolia"
+  },
   "overrides": {
     "ws@>=7.0.0 <7.5.10": ">=7.5.10",
     "axios@>=1.3.2 <=1.7.3": ">=1.7.4",
