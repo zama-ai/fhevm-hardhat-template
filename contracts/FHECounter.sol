@@ -2,12 +2,12 @@
 pragma solidity ^0.8.24;
 
 import {FHE, euint32, externalEuint32} from "@fhevm/solidity/lib/FHE.sol";
-import {SepoliaConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
+import {EthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
 
 /// @title A simple FHE counter contract
 /// @author fhevm-hardhat-template
 /// @notice A very basic example contract showing how to work with encrypted data using FHEVM.
-contract FHECounter is SepoliaConfig {
+contract FHECounter is EthereumConfig {
     euint32 private _count;
 
     /// @notice Returns the current count
