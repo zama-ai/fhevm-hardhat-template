@@ -69,6 +69,7 @@
     "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile",
     "coverage": "cross-env SOLIDITY_COVERAGE=true hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"test/**/*.ts\" && npm run typechain",
     "lint": "npm run lint:sol && npm run lint:ts && npm run prettier:check",
+    "lint:fix": "npm run lint:sol && npm run lint:ts && npm run prettier:write",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
     "lint:ts": "eslint --ignore-path ./.eslintignore --ext .js,.ts .",
     "postcompile": "npm run typechain",
