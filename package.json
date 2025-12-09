@@ -1,7 +1,7 @@
 {
   "name": "fhevm-hardhat-template",
   "description": "Hardhat-based template for developing FHEVM Solidity smart contracts",
-  "version": "0.3.0-1",
+  "version": "0.3.0-3",
   "engines": {
     "node": ">=20",
     "npm": ">=7.0.0"
@@ -28,7 +28,7 @@
     "@fhevm/solidity": "^0.9.1"
   },
   "devDependencies": {
-    "@fhevm/hardhat-plugin": "^0.3.0-1",
+    "@fhevm/hardhat-plugin": "^0.3.0-3",
     "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
     "@nomicfoundation/hardhat-ethers": "^3.1.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.1.0",
@@ -40,7 +40,7 @@
     "@types/node": "^20.19.8",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
-    "@zama-fhe/relayer-sdk": "^0.3.0-5",
+    "@zama-fhe/relayer-sdk": "^0.3.0-6",
     "chai": "^4.5.0",
     "chai-as-promised": "^8.0.1",
     "cross-env": "^7.0.3",
