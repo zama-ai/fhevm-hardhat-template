@@ -8,6 +8,18 @@ FHEVM protocol by Zama.
 For detailed instructions see:
 [FHEVM Hardhat Quick Start Tutorial](https://docs.zama.ai/protocol/solidity-guides/getting-started/quick-start-tutorial)
 
+## Mocked vs non-mocked runs
+
+At a high level:
+
+- **Mocked runs** execute your contracts against local FHEVM mocks.  
+  They are fast, deterministic, and ideal for unit tests, fuzzing, and coverage.
+- **Non-mocked runs** talk to a real FHEVM backend.  
+  They are closer to production behaviour but slower and require a running backend service.
+
+Use mocked runs for most development workflows, and switch to non-mocked runs only
+when you need to validate integration with the real backend or benchmark end-to-end behaviour.
+
 ### Prerequisites
 
 - **Node.js**: Version 20 or higher
