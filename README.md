@@ -88,6 +88,11 @@ fhevm-hardhat-template/
 | `npm run lint`     | Run linting checks       |
 | `npm run clean`    | Clean build artifacts    |
 
+### Mocked vs non-mocked tests
+
+- Use `npm run test` and `npm run coverage` with the mocked FHEVM setup for fast feedback and coverage reports.
+- Use `npx hardhat test --network sepolia` when you need to validate behaviour against the Sepolia fhEVM backend, at the cost of slower runs.
+
 ## 📚 Documentation
 
 - [FHEVM Documentation](https://docs.zama.ai/fhevm)
