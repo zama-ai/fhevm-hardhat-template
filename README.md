@@ -80,6 +80,8 @@ fhevm-hardhat-template/
 
 ## 📜 Available Scripts
 
+The following npm scripts are defined in `package.json` to cover the most common FHEVM Hardhat workflows:
+
 | Script             | Description              |
 | ------------------ | ------------------------ |
 | `npm run compile`  | Compile all contracts    |
