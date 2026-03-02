@@ -12,6 +12,7 @@ For detailed instructions see:
 
 - **Node.js**: Version 20 or higher
 - **npm or yarn/pnpm**: Package manager
+For an overview of the FHEVM and how it works, see the main FHEVM documentation: https://docs.zama.ai/fhevm/getting-started/overview
 
 ### Installation
 
