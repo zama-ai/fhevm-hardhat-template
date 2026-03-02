@@ -8,6 +8,11 @@ FHEVM protocol by Zama.
 For detailed instructions see:
 [FHEVM Hardhat Quick Start Tutorial](https://docs.zama.ai/protocol/solidity-guides/getting-started/quick-start-tutorial)
 
+### Testing modes overview
+
+- **Mocked mode** runs tests locally with simulated FHE operations for fast feedback.
+- **Non-mocked mode** uses a real fhEVM node (for example, the coprocessor on Sepolia) and should be used as a final check before deployment.
+
 ### Prerequisites
 
 - **Node.js**: Version 20 or higher
