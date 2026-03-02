@@ -8,6 +8,11 @@ FHEVM protocol by Zama.
 For detailed instructions see:
 [FHEVM Hardhat Quick Start Tutorial](https://docs.zama.ai/protocol/solidity-guides/getting-started/quick-start-tutorial)
 
+## Further reading
+
+- Introductory guide that shows how to configure Hardhat for FHEVM and deploy your first confidential contract.
+- Extended Solidity guides that cover Hardhat tasks, plugins, and best practices for larger FHEVM projects.
+
 ### Prerequisites
 
 - **Node.js**: Version 20 or higher
