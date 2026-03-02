@@ -84,7 +84,7 @@ fhevm-hardhat-template/
 | ------------------ | ------------------------ |
 | `npm run compile`  | Compile all contracts    |
 | `npm run test`     | Run all tests            |
-| `npm run coverage` | Generate coverage report |
+| `npm run coverage` | Generate coverage report (snapshot-heavy tests can be tagged with `[skip-on-coverage]` to avoid known solidity-coverage limitations) |
 | `npm run lint`     | Run linting checks       |
 | `npm run clean`    | Clean build artifacts    |
 
