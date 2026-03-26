@@ -7,6 +7,7 @@ FHEVM protocol by Zama.
 
 For detailed instructions see:
 [FHEVM Hardhat Quick Start Tutorial](https://docs.zama.ai/protocol/solidity-guides/getting-started/quick-start-tutorial)
+To set up your local Hardhat environment, you can also refer to the Zama docs: [Set up Hardhat](https://docs.zama.ai/protocol/solidity-guides/getting-started/setup).
 
 ### Prerequisites
 
