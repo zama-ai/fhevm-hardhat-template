@@ -78,6 +78,8 @@ fhevm-hardhat-template/
 └── package.json         # Dependencies and scripts
 ```
 
+This layout is intended as a minimal starting point: new FHEVM contracts, deployment scripts and custom tasks should be added under the existing `contracts/`, `deploy/` and `tasks/` directories.
+
 ## 📜 Available Scripts
 
 | Script             | Description              |
