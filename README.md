@@ -40,14 +40,23 @@ For detailed instructions see:
    npm run test
    ```
 
-4. **Deploy to local network**
+4. **Deploy and test on a local node**
 
    ```bash
-   # Start a local FHEVM-ready node
+   # Start a local node (either works)
    npx hardhat node
-   # Deploy to local network
+   # or: anvil
+
+   # Deploy to it (use --network anvil for anvil)
    npx hardhat deploy --network localhost
+   # Test against it — the plugin stands the FHEVM mock stack up on the node automatically
+   npx hardhat test --network localhost
    ```
+
+   To prepare the FHEVM stack on the node before any Hardhat process connects (e.g. for other
+   tooling), run `npm run deploy:local` from
+   [`sdk/host-contracts-cleartext`](../sdk/host-contracts-cleartext) — the package that owns FHEVM
+   deployment. The plugin detects and adopts a stack deployed that way.
 
 5. **Deploy to Sepolia Testnet**
 
