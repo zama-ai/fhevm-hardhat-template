@@ -17,6 +17,11 @@ import "./tasks/FHECounter";
 const MNEMONIC: string = vars.get("MNEMONIC", "test test test test test test test test test test test junk");
 const INFURA_API_KEY: string = vars.get("INFURA_API_KEY", "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
 
+// Local dev networks (hardhat / anvil) must use the well-known test mnemonic that these nodes fund by
+// default. Using the private MNEMONIC var here derives accounts a plain `anvil` does not fund, so
+// deploys fail with "insufficient funds". Only real networks (sepolia) use MNEMONIC.
+const LOCAL_MNEMONIC = "test test test test test test test test test test test junk";
+
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   namedAccounts: {
@@ -35,13 +40,13 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       accounts: {
-        mnemonic: MNEMONIC,
+        mnemonic: LOCAL_MNEMONIC,
       },
       chainId: 31337,
     },
     anvil: {
       accounts: {
-        mnemonic: MNEMONIC,
+        mnemonic: LOCAL_MNEMONIC,
         path: "m/44'/60'/0'/0/",
         count: 10,
       },
